@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+# Script para reclassificar TODAS as noticias no banco de dados
+# Zera apenas o sentimento para que sentiment.py reclassifique com o novo modelo Qwen.
+# NAO APAGA NADA - somente reclassifica os registros que ja existem.
+import os, json, urllib.request, urllib.error
+
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://SEU_PROJETO.supabase.co")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "")
+TABLE = "monitored_news"
+
+def _hdr():
+    return {"apikey": SUPABASE_KEY, "Authorization": f"Bearer {SUPABASE_KEY}", "Prefer": "return=representation"}
+
+# Zera o sentimento de TODAS as noticias (para forcar reclassificacao)
+url = f"{SUPABASE_URL}/rest/v1/{TABLE}"
+hdr = _hdr()
+body = json.dumps({"sentimento": ""}).encode()
+req = urllib.request.Request(url, data=body, method="PATCH", headers=hdr)
+try:
+    r = urllib.request.urlopen(req, timeout=30)
+    print("SUCCESS: Todas as noticias tiveram sentimento zerado.")
+    print("O pipeline do sentiment.py vai reclassificar tudo no proximo ciclo (05:30 BRT).")
+    print("Nenhuma noticia foi apagada - apenas reclassificada.")
+except urllib.error.HTTPError as e:
+    print(f"ERRO: HTTP {e.code} - {e.read().decode()[:300]}")
+except Exception as e:
+    print(f"ERRO: {e}")

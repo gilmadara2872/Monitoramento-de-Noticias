@@ -1,0 +1,8 @@
+# Arquivos de dados/saida temporarios (podem conter noticias) - nao versionar
+monitor_out.json
+*.local.json
+.env
+
+# Cache de bytecode: nao deve ser versionado (so polui o diff e o repo)
+__pycache__/
+*.pyc

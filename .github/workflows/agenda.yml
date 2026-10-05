@@ -1,0 +1,83 @@
+name: Monitor de Noticias - Pipeline Automatizado (Cliente)
+
+on:
+  schedule:
+    # BRT = UTC-3 (sem DST). 05:00 / 05:30 / 06:00 BRT = 08:00 / 08:30 / 09:00 UTC.
+    - cron: "0 8 * * *"    # 05:00 BRT - monitorar Google News (dia anterior)
+    - cron: "30 8 * * *"   # 05:30 BRT - analise de sentimento (Hy3 free / lexico)
+    - cron: "0 9 * * *"    # 06:00 BRT - enviar resumo via Telegram
+  workflow_dispatch:       # permite rodar manualmente pela aba Actions (roda os 3)
+
+permissions:
+  contents: read
+
+jobs:
+  monitor:
+    if: github.event.schedule == '0 8 * * *' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    # A coleta em 3 camadas baixa o corpo de varias materias para conferir
+    # se o nome esta no texto. Medido: passa de 60 minutos, porque cada
+    # consulta baixa ate 20 paginas com pausa de 1,2s.
+    #
+    # O pipeline e sequencial (monitor -> sentiment -> send). Se o monitor
+    # estoura, o resumo do Telegram NAO e enviado - foi o que aconteceu
+    # em 2026-10-04, quando o disparo ficou ~1h sem concluir.
+    timeout-minutes: 120
+    defaults:
+      run:
+        working-directory: github-actions
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Monitorar
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          KEYWORDS: ${{ secrets.KEYWORDS }}
+        run: python monitor.py
+
+  sentiment:
+    if: github.event.schedule == '30 8 * * *' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    # Classificar por IA leva ~3-6s por noticia; com --force sao ~38.
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: github-actions
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Sentimento
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+        run: python sentiment.py
+
+  send:
+    # Antes so rodava no schedule das 06:00. Com workflow_dispatch o job
+    # era sempre pulado, o que impedia confirmar que a mensagem chega e
+    # ver o formato que o cliente recebe.
+    if: github.event.schedule == '0 9 * * *' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: github-actions
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Enviar resumo
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          KEYWORDS: ${{ secrets.KEYWORDS }}
+        run: python send_summary.py
