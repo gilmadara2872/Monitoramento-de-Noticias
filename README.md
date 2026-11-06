@@ -59,7 +59,7 @@ noticias-automaticas/
 ## Coleta em 3 camadas
 
 Buscar só pelo nome **perde matéria**: foi assim que a matéria do O Globo
-("Do destino ao restaurante...") escapou — o a pessoa aparecia 6 vezes no
+("Do destino ao restaurante...") escapou — o cliente aparecia 6 vezes no
 corpo e **nenhum** no título. Por isso a coleta hoje é:
 
 | Camada | Busca | Pega o quê |
@@ -87,7 +87,7 @@ não aceite automático. Sem as checagens de link e título (commits
 
 ### O filtro de matéria × página (`filtro_pagina.py`)
 
-Uma página de portal traz o nome do a pessoa no menu lateral, no rodapé ou
+Uma página de portal traz o nome do cliente no menu lateral, no rodapé ou
 em "Notícias Relacionadas". Isso **não é** matéria sobre ele.
 
 | Regra | O que exige |
@@ -106,7 +106,7 @@ ruídos barrados, o caso de 62% aceito.
 ## Análise de sentimento
 
 ### 0. O que se avalia é a PESSOA, não o assunto
-Definido pelo a pessoa: *sentimento é a avaliação da participação dele,
+Definido pelo cliente: *sentimento é a avaliação da participação dele,
 não do tema da matéria.* Um acidente climático é negativo; ele não é.
 
 O princípio central, nas palavras dele (refinado em 2026-10-05):
@@ -128,20 +128,20 @@ O princípio central, nas palavras dele (refinado em 2026-10-05):
 A fronteira POSITIVA × NEUTRA é uma só: **agregou posição técnica, ou o nome
 só aparece citado sem opinião nenhuma?**
 
-**Criações do a pessoa (2026-10-08):** notícias sobre obras criadas pelo
-a pessoa (livros publicados, projetos lançados, etc.) são **POSITIVAS**,
+**Criações do cliente (2026-10-08):** notícias sobre obras criadas pelo
+o cliente (livros publicados, projetos lançados, etc.) são **POSITIVAS**,
 mesmo quando a menção é apenas factual. A lógica: a notícia reporta algo
 que ele construiu — isso demonstra autoridade e constrói legado. Isso
 inclui menções como *"seu bisneto, que pesquisou documentos e memórias da
 família"* em matéria sobre livro publicado por ele (caso "Quem foi Laucídio
 Coelho", reclassificado de NEUTRA para POSITIVA).
 
-Exemplos que o a pessoa definiu (validados na IA real):
+Exemplos que o cliente definiu (validados na IA real):
 
 | Situação | Resultado |
 |---|---|
 | Opinião técnica como especialista, mesmo em assunto alheio/negativo | **POSITIVA** |
-| Criações do a pessoa (livros publicados, projetos lançados) | **POSITIVA** — mesmo menção factual |
+| Criações do cliente (livros publicados, projetos lançados) | **POSITIVA** — mesmo menção factual |
 | Nome em lista de palestrantes, "Assuntos Relacionados", tag | **NEUTRA** |
 | Vítima de violência (não é culpa nem juízo sobre ele) | **NEUTRA** |
 | Citado perto de crime/investigação, sem acusação direta | **NEGATIVA** |
