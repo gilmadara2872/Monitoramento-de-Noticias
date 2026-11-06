@@ -23,7 +23,7 @@ UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
 
 
 def normaliza(s):
-    """minusculas sem acento, para casar 'Correa' com 'Correa'."""
+    """minusculas sem acento, para casar 'Nome' com 'Nome'."""
     s = unicodedata.normalize("NFD", (s or "").lower())
     return "".join(c for c in s if unicodedata.category(c) != "Mn")
 
@@ -39,7 +39,7 @@ def cita(texto, keyword):
     futebol e de politica.
 
     Por isso exigimos o NOME INTEIRO como sequencia, com espaco em volta:
-    ' a pessoa correa ' ou ' a pessoa  correa ' (espaco duplo quando o
+    ' a pessoa nome ' ou ' a pessoa  nome ' (espaco duplo quando o
     original trazia <strong>). Isso mantem o match no meio da frase e
     descarta quem tem so o sobrenome em outro contexto.
     """

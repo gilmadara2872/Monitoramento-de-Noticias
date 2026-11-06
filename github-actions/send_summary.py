@@ -38,7 +38,7 @@ def _norm_kw(s):
     """Normaliza keyword para agrupamento: sem acento, sem caixa.
 
     O Google retorna o título com a grafia que o veículo usou — 'a pessoa
-    Correa' (sem acento) quando o site não acentua. O monitor grava essa
+    Nome' (sem acento) quando o site não acentua. O monitor grava essa
     grafia no campo `keyword`, e o resumo agrupava por ela: criava DOIS
     grupos para a mesma pessoa ('Cliente Nome - 28' e 'Cliente Nome - 4').
     Agrupar pela forma normalizada junta; o rótulo do grupo usa a grafia

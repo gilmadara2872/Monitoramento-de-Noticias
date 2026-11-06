@@ -25,7 +25,7 @@ noticias-automaticas/
 │   ├── send_summary.py     # 06:00 BRT - Envia resumo via Telegram
 │   ├── requirements.txt    # Dependências Python
 │   └── README.md           # Documentação do pipeline
-└── painel-a pessoa-7f3a9c.html  # Painel web com gráficos
+└── painel-monitoramento.html  # Painel web com gráficos
 ```
 
 ## Pipeline (GitHub Actions)
@@ -238,7 +238,7 @@ python send_summary.py
 
 ## Painel web
 
-O arquivo `painel-a pessoa-7f3a9c.html` é uma página estática que lê diretamente do Supabase (chave anon, somente leitura) e exibe:
+O arquivo `painel-monitoramento.html` é uma página estática que lê diretamente do Supabase (chave anon, somente leitura) e exibe:
 
 - Gráfico pizza: distribuição de sentimentos
 - Gráfico barras: notícias por dia

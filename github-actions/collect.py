@@ -85,7 +85,7 @@ VEICULOS = [
     'site:estadao.com.br "Cliente Nome"',
     'site:cnnbrasil.com.br "Cliente Nome"',
     'site:valor.globo.com "Cliente Nome"',
-    # sem acento: veiculo grande costuma publicar "Correa"
+    # sem acento: veiculo grande costuma publicar "Nome"
     'site:folha.uol.com.br Cliente Nome',
     'site:oglobo.globo.com Cliente Nome',
     'site:estadao.com.br Cliente Nome',

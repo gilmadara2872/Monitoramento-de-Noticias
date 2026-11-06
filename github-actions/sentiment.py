@@ -208,7 +208,7 @@ def lexicon_sentiment(title, content):
 
 
 # A REGRA: o que importa e o PAPEL que a pessoa DESEMPENHA na noticia, e
-# nao o tema dela. Refinada em 2026-10-05 com os 3 casos que o a pessoa
+# nao o tema dela. Refinada em 2026-10-05 com os 3 casos que o cliente
 # explicou (citado sem autoridade = NEUTRA; perto de crime = NEGATIVA;
 # opiniao tecnica = POSITIVA mesmo em assunto alheio).
 PROMPT_REGRAS = (
@@ -238,9 +238,9 @@ PROMPT_REGRAS = (
     "POSITIVA (deu posicao)\n"
     "  - 'Cliente Nome foi citado na materia' / 'Cliente Nome consta "
     "entre os nomes' -> NEUTRA (so citado, sem opiniao)\n\n"
-    "CRIACOES DO A PESSOA (2026-10-08): noticias sobre obras criadas pelo "
+    "CRIACOES DO CLIENTE (2026-10-08): noticias sobre obras criadas pelo "
     "a pessoa (livros publicados, projetos lancados, etc.) sao POSITIVAS, "
-    "mesmo quando a mencao e apenas factual. A logica do a pessoa: a noticia "
+    "mesmo quando a mencao e apenas factual. A logica do cliente: a noticia "
     "reporta algo que ele construiu - isso demonstra autoridade e constroi "
     "legado, independentemente de opiniao explicita. Isso inclui mencoes "
     "como 'seu bisneto, que pesquisou documentos e memorias da familia' "

@@ -53,7 +53,7 @@ O princípio central, nas palavras do cliente (refinado em 2026-10-05):
 - **NEGATIVA** — ficou relacionado a tema perigoso (crime, investigação,
   processo), **mesmo sem acusação direta**. *"O que ele estava fazendo perto
   disso?"* Deixar o leitor na dúvida já basta.
-- **POSITIVA** — criações do a pessoa (livros publicados, projetos lançados,
+- **POSITIVA** — criações do cliente (livros publicados, projetos lançados,
   etc.) são sempre **POSITIVAS**, mesmo que a menção seja apenas factual.
   A notícia reporta algo que ele construiu — demonstra autoridade e constrói
   legado. Exemplo: *"Quem foi Laucídio Coelho"* (menção ao livro publicado
@@ -141,7 +141,7 @@ github-actions/
   README.md           # esta documentação
 .github/workflows/agenda.yml    # agendamento (cron BRT) + dispatch manual
 .github/workflows/reclassify.yml # reclassifica TODAS as noticias com LLM
-painel-a pessoa-7f3a9c.html      # painel web com gráficos
+painel-monitoramento.html      # painel web com gráficos
 ```
 
 ## Pipeline agendado
@@ -191,7 +191,7 @@ distinto).
 ### 4. O corte de posição do filtro: 60% → 85%
 Calibrado nas 32 matérias do banco, cuja menção mais tardia era 58%, e o
 corte ficou logo acima. A coleta de 2026-10-05 trouxe uma matéria real a
-**62%** — o a pessoa entre 8 palestrantes confirmados. Perder matéria real
+**62%** — o cliente entre 8 palestrantes confirmados. Perder matéria real
 custa mais que guardar ruído, e o ruído é barrado pela regra do nome
 completo, não pela posição.
 
@@ -221,14 +221,14 @@ se a principal falhar. Não há trava: quando ela volta, volta sozinha.
 ### 9. A regra de sentimento é do papel, e ela foi refinada pelo cliente
 O prompt tinha uma **contradição**: uma seção dizia "ser citado não é
 positivo" e outra dizia que ser citado como fonte é POSITIVA. Ao receber os
-detalhes do a pessoa em 2026-10-05, o prompt foi **reescrito inteiro** — não
+detalhes do cliente em 2026-10-05, o prompt foi **reescrito inteiro** — não
 empilhei uma seção nova sobre a antiga. Princípio dele: NEUTRA é citado sem
 autoridade e sem nada errado; POSITIVA é quando constrói autoridade (posição
 técnica, mesmo em assunto alheio); NEGATIVA é ficar perto de tema perigoso,
 mesmo sem acusação direta.
 
 ### 10. Medir efeito de prompt exige matéria real, não frase isolada
-Testei o prompt antigo vs novo nas 3 frases do a pessoa: **igual em 12/12**.
+Testei o prompt antigo vs novo nas 3 frases do cliente: **igual em 12/12**.
 Parecia que o ajuste não fazia nada. Mas rodando `--force` nas 34 matérias
 reais, **6 mudaram de rótulo** — e a do Laucídio Coelho saiu de NEUTRA para
 POSITIVA. Frases curtas e claras passam em qualquer versão e escondem a
@@ -243,8 +243,8 @@ Medido em 2026-10-06 nas 6 matérias que mudaram de rótulo, 3 rodadas cada:
   banco (lista de palestrantes = NEUTRA, tag = NEUTRA, "especialista...
   analisa" = POSITIVA, "apresenta a palestra" = POSITIVA).
 - **1 é INSTÁVEL**: "Quem foi Laucídio Coelho" deu `POSITIVA, POSITIVA,
-  NEUTRA` em três rodadas idênticas — a frase é *"seu bisneto a pessoa
-  Corrêa, que pesquisou documentos e memórias da família"*. É fronteira
+  NEUTRA` em três rodadas idênticas — a frase é *"seu bisneto (cliente)
+  Nome, que pesquisou documentos e memórias da família"*. É fronteira
   genuína: é fonte da informação, mas não é posição técnica.
 
 Lição: um rótulo que muda entre rodadas idênticas **não é classificação, é
